@@ -75,43 +75,15 @@ namespace CacheClearer
 
         private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // If selected index is -1 (no selection) do nothing
+            if (listBox1.SelectedIndex == -1)
+                return;
+
             AppListItem item = (AppListItem)listBox1.SelectedItem;
-            listBox1.IsEnabled = false;
-            Microsoft.Phone.Shell.ProgressIndicator pi = new Microsoft.Phone.Shell.ProgressIndicator();
-            Microsoft.Phone.Shell.SystemTray.SetProgressIndicator(this, pi);
-            pi.IsIndeterminate = true;
-            pi.Text = "Checking cache of " + item.AppName;
-            pi.IsVisible = true;
-            List<WP7RootToolsSDK.File> fileList = getFilesInSubFolders("\\Applications\\Data\\" + item.Guid + "\\Data\\Cache\\");
-            MessageBox.Show(fileList.Count + " files in cache!");
-            listBox1.IsEnabled = true;
-            pi.IsVisible = false;
+            // Navigate to the new page
+            NavigationService.Navigate(new Uri("/DetailsPage.xaml?appguid=" + item.Guid, UriKind.Relative));
 
         }
-        public List<WP7RootToolsSDK.File> getFilesInSubFolders(string path)
-        {
-            List<WP7RootToolsSDK.File> fileList = new List<WP7RootToolsSDK.File>();
 
-           // try
-            //{
-                WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder(path);
-                foreach (WP7RootToolsSDK.FileSystemEntry item in folder.GetSubItems())
-                {
-                    if (item.IsFile)
-                    {
-                        fileList.Add((WP7RootToolsSDK.File)item);
-                    }
-                    else
-                    {
-                        fileList.AddRange(getFilesInSubFolders(item.Path));
-                    }
-                }
-           // }
-            //catch (Exception ex)
-           // {
-                //System.Diagnostics.Debug.WriteLine(ex.Message);
-           // }
-            return fileList;
-        }
     }
 }
