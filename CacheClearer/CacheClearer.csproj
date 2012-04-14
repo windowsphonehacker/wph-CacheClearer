@@ -57,9 +57,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
-    <Reference Include="WP7RootToolsSDK-0.1.6.0">
-      <HintPath>.\WP7RootToolsSDK-0.1.6.0.dll</HintPath>
-    </Reference>
+    <Reference Include="WP7RootToolsSDK-0.1.6.0, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -99,6 +97,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SplashScreenImage.jpg" />
+    <Content Include="WP7RootToolsSDK-0.1.6.0.dll" />
     <Content Include="WP7RootToolsSDKNative-0.1.6.0.dll" />
     <Content Include="WPInteropManifest.xml" />
   </ItemGroup>
