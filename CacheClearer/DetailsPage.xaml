@@ -20,7 +20,13 @@
         <controls:Pivot Name="MainPivot" Title="CacheViewer">
             <!--Pivot item one-->
             <controls:PivotItem Header="Summary">
-                <Grid/>
+                <Grid>
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="7,7,0,0" Text="Total cache size:" VerticalAlignment="Top" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="7,57,0,0" Text="Total number of cached files:" VerticalAlignment="Top" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="350,7,0,0" Name="cacheSizeBlock" Text="Unknown" VerticalAlignment="Top" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="350,57,0,0" Name="cachedFilesBlock" Text="Unknown" VerticalAlignment="Top" />
+                    <Button Content="Clear cache" Height="72" HorizontalAlignment="Left" Margin="-6,534,0,0" Name="button1" VerticalAlignment="Top" Width="194" Click="button1_Click" />
+                </Grid>
             </controls:PivotItem>
 
             <!--Pivot item two-->

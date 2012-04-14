@@ -28,16 +28,30 @@ namespace CacheClearer
             if (NavigationContext.QueryString.TryGetValue("appguid", out appGuid))
             {
                 MainPivot.Title = WP7RootToolsSDK.Applications.GetApplicationName(new Guid(appGuid));
-                List<WP7RootToolsSDK.File> fileList = cleanCache.getFilesInSubFolders(@"\Applications\Data\" + appGuid + @"\Data\Cache\");
-                foreach (WP7RootToolsSDK.File file in fileList)
-                {
-                    filesBox.Items.Add(new FileListItem(file));
-                }
+                refreshInfos();
             }
             else
             {
                 NavigationService.GoBack();
             }
+        }
+        private void refreshInfos()
+        {
+            filesBox.Items.Clear();
+            cachedFilesBlock.Text = "Unknown";
+            cacheSizeBlock.Text = "Unknown";
+            List<WP7RootToolsSDK.File> fileList = cleanCache.getFilesInSubFolders(@"\Applications\Data\" + appGuid + @"\Data\Cache\");
+            int files = 0;
+            uint filesizes = 0;
+            foreach (WP7RootToolsSDK.File file in fileList)
+            {
+                files++;
+                filesizes += file.Size;
+                filesBox.Items.Add(new FileListItem(file));
+            }
+
+            cachedFilesBlock.Text = files.ToString();
+            cacheSizeBlock.Text = Utils.readableFileSize(filesizes);
         }
         public class FileListItem
         {
@@ -51,10 +65,10 @@ namespace CacheClearer
 
             public override string ToString()
             {
-                return File.Name + " - " + readableFileSize(File.Size);
+                return File.Name + " - " + Utils.readableFileSize(File.Size);
             }
         }
-        
+
 
         private void filesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -62,18 +76,36 @@ namespace CacheClearer
                 return;
 
             FileListItem item = (FileListItem)filesBox.SelectedItem;
-            MessageBox.Show("Path: "+item.File.Path+"\nSize: "+readableFileSize(item.File.Size), item.File.Name, MessageBoxButton.OK);
-        }
-        public static string readableFileSize(long bytes)
-        {
-            string[] sizes = { "B", "KB", "MB", "GB" };
-            int order = 0;
-            while (bytes >= 1024 && order + 1 < sizes.Length)
+            if (MessageBox.Show("Path: " + item.File.Path + "\nSize: " + Utils.readableFileSize(item.File.Size) + "\n\nOpen file in default app?", item.File.Name, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                order++;
-                bytes = bytes / 1024;
+                string ext = Utils.getFileExtension(item.File.Name);
+                //TODO: Find a way to open in native app (ShellExecuteEx in C++) and maybe create in-app viewers for images and web pages.
+                //TODO: Add fiinix credits for dllimport
+                switch (ext)
+                {
+                    case "jpg":
+                    case "jpeg":
+                    case "png":
+                    case "bmp":
+                    case "gif":
+                        CSharp___DllImport.Phone.AppLauncher.OpenPicture(item.File.Path);
+                        break;
+                    case "html":
+                    case "htm":
+                        NavigationService.Navigate(new Uri("/FileViewers/HTMLViewer.xaml?path=" + item.File.Path, UriKind.Relative));
+                        break;
+                    default:
+                        MessageBox.Show("I don't know how to open this file", "Error", MessageBoxButton.OK);
+                        break;
+                }
             }
-            return String.Format("{0:0.##} {1}", bytes, sizes[order]);
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            cleanCache.cleanAppCache(appGuid);
+            refreshInfos();
+            MessageBox.Show("Cache cleared!");
         }
     }
 }
