@@ -28,7 +28,8 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox Height="595" HorizontalAlignment="Left" Margin="6,6,0,0" Name="listBox1" VerticalAlignment="Top" Width="450" SelectionChanged="listBox1_SelectionChanged" />
+            <ListBox Height="529" HorizontalAlignment="Left" Margin="6,6,0,0" Name="listBox1" VerticalAlignment="Top" Width="450" SelectionChanged="listBox1_SelectionChanged" />
+            <Button Content="Quick Clean" Height="72" HorizontalAlignment="Left" Margin="-6,534,0,0" Name="button1" VerticalAlignment="Top" Width="194" Click="button1_Click" />
         </Grid>
     </Grid>
  

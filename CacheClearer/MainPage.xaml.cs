@@ -85,5 +85,22 @@ namespace CacheClearer
 
         }
 
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("This will permanently erase cache files from your phone.", "Warning", MessageBoxButton.OKCancel) != MessageBoxResult.OK)
+            {
+                return;
+            }
+
+            foreach (AppListItem item in listBox1.Items)
+            {
+                System.Diagnostics.Debug.WriteLine(item);
+                cleanCache.cleanAppCache(item.Guid);
+            }
+
+            //TODO: add an indicator of how much was saved
+            MessageBox.Show("Cache cleaned.");
+        }
+
     }
 }

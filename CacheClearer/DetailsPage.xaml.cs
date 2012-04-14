@@ -28,7 +28,7 @@ namespace CacheClearer
             if (NavigationContext.QueryString.TryGetValue("appguid", out appGuid))
             {
                 MainPivot.Title = WP7RootToolsSDK.Applications.GetApplicationName(new Guid(appGuid));
-                List<WP7RootToolsSDK.File> fileList = getFilesInSubFolders(@"\Applications\Data\" + appGuid + @"\Data\Cache\");
+                List<WP7RootToolsSDK.File> fileList = cleanCache.getFilesInSubFolders(@"\Applications\Data\" + appGuid + @"\Data\Cache\");
                 foreach (WP7RootToolsSDK.File file in fileList)
                 {
                     filesBox.Items.Add(new FileListItem(file));
@@ -54,31 +54,7 @@ namespace CacheClearer
                 return File.Name + " - " + readableFileSize(File.Size);
             }
         }
-        public List<WP7RootToolsSDK.File> getFilesInSubFolders(string path)
-        {
-            List<WP7RootToolsSDK.File> fileList = new List<WP7RootToolsSDK.File>();
-
-            // try
-            //{
-            WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder(path);
-            foreach (WP7RootToolsSDK.FileSystemEntry item in folder.GetSubItems())
-            {
-                if (item.IsFile)
-                {
-                    fileList.Add((WP7RootToolsSDK.File)item);
-                }
-                else
-                {
-                    fileList.AddRange(getFilesInSubFolders(item.Path));
-                }
-            }
-            // }
-            //catch (Exception ex)
-            // {
-            //System.Diagnostics.Debug.WriteLine(ex.Message);
-            // }
-            return fileList;
-        }
+        
 
         private void filesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
