@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AmCharts.Windows.QuickCharts.WP">
+      <HintPath>..\..\..\..\..\Downloads\amwpquickdemo_1.1.beta.r2\QuickChartsDemoWP7\AmCharts.Windows.QuickCharts.WP.dll</HintPath>
+    </Reference>
     <Reference Include="CSharp - DllImport, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
@@ -68,6 +71,7 @@
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileTypes.cs" />
     <Compile Include="FileViewers\HTMLViewer.xaml.cs">
       <DependentUpon>HTMLViewer.xaml</DependentUpon>
     </Compile>

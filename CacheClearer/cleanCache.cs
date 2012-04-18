@@ -16,8 +16,10 @@ namespace CacheClearer
     //In separate class due to the fact it is accessed by multiple pages
     public class cleanCache
     {
-        public static void cleanAppCache(string guid)
+        public static int cleanAppCache(string guid)
         {
+            int totalSize = 0;
+
             string path = @"\Applications\Data\" + guid + @"\Data\Cache\";
             List<WP7RootToolsSDK.File> files = getFilesInSubFolders(path);
 
@@ -25,8 +27,10 @@ namespace CacheClearer
             {
                     WP7RootToolsSDK.FileSystem.DeleteFile(file.Path);
                     System.Diagnostics.Debug.WriteLine("Deleted " + file.Path);
-                
+                    totalSize += (int)file.Size;
             }
+
+            return totalSize;
         }
 
         //moved from DetailsPage.xaml.cs

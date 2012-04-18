@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    xmlns:amq="clr-namespace:AmCharts.Windows.QuickCharts;assembly=AmCharts.Windows.QuickCharts.WP"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -25,18 +26,25 @@
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="7,57,0,0" Text="Total number of cached files:" VerticalAlignment="Top" />
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="350,7,0,0" Name="cacheSizeBlock" Text="Unknown" VerticalAlignment="Top" />
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="350,57,0,0" Name="cachedFilesBlock" Text="Unknown" VerticalAlignment="Top" />
+                    <amq:PieChart x:Name="pieChart" 
+                          DataSource="{Binding Data}"
+                          TitleMemberPath="title" 
+                          ValueMemberPath="value" Height="259" Margin="-42,106,16,242" Width="482" DataContext="{Binding}">
+                    </amq:PieChart>
                     <Button Content="Clear cache" Height="72" HorizontalAlignment="Left" Margin="-6,534,0,0" Name="button1" VerticalAlignment="Top" Width="194" Click="button1_Click" />
                 </Grid>
-            </controls:PivotItem>
-
-            <!--Pivot item two-->
-            <controls:PivotItem Header="Images">
-                <Grid/>
             </controls:PivotItem>
             <controls:PivotItem Header="Files">
                 <ListBox Height="603" HorizontalAlignment="Left" Margin="4,3,0,0" Name="filesBox" VerticalAlignment="Top" Width="453" SelectionChanged="filesBox_SelectionChanged" />
 
             </controls:PivotItem>
+            
+            <controls:PivotItem Header="Images">
+                <!-- Is this supposed to display image previews? Not sure how to handle that when they
+                are outside of the app sandbox. -->
+                <Grid/>
+            </controls:PivotItem>
+            
         </controls:Pivot>
     </Grid>
 

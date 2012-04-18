@@ -11,11 +11,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.Windows.Navigation;
-
+using System.Collections.ObjectModel;
 namespace CacheClearer
 {
     public partial class DetailsPage : PhoneApplicationPage
     {
+        int[] sizeByType;
 
         public string appGuid = "";
         public DetailsPage()
@@ -37,6 +38,8 @@ namespace CacheClearer
         }
         private void refreshInfos()
         {
+            sizeByType = new int[4];
+
             filesBox.Items.Clear();
             cachedFilesBlock.Text = "Unknown";
             cacheSizeBlock.Text = "Unknown";
@@ -48,10 +51,19 @@ namespace CacheClearer
                 files++;
                 filesizes += file.Size;
                 filesBox.Items.Add(new FileListItem(file));
+                FileTypes.FileType type = FileTypes.getFileType(Utils.getFileExtension(file.Name));
+                sizeByType[(int)type] += (int)file.Size;
             }
 
             cachedFilesBlock.Text = files.ToString();
             cacheSizeBlock.Text = Utils.readableFileSize(filesizes);
+
+            updateChart();
+
+            System.Diagnostics.Debug.WriteLine(sizeByType[0]);
+            System.Diagnostics.Debug.WriteLine(sizeByType[1]);
+            System.Diagnostics.Debug.WriteLine(sizeByType[2]);
+            System.Diagnostics.Debug.WriteLine(sizeByType[3]);
         }
         public class FileListItem
         {
@@ -81,17 +93,12 @@ namespace CacheClearer
                 string ext = Utils.getFileExtension(item.File.Name);
                 //TODO: Find a way to open in native app (ShellExecuteEx in C++) and maybe create in-app viewers for images and web pages.
                 //TODO: Add fiinix credits for dllimport
-                switch (ext)
+                switch (FileTypes.getFileType(ext))
                 {
-                    case "jpg":
-                    case "jpeg":
-                    case "png":
-                    case "bmp":
-                    case "gif":
+                    case FileTypes.FileType.Image:
                         CSharp___DllImport.Phone.AppLauncher.OpenPicture(item.File.Path);
                         break;
-                    case "html":
-                    case "htm":
+                    case FileTypes.FileType.Html:
                         NavigationService.Navigate(new Uri("/FileViewers/HTMLViewer.xaml?path=" + item.File.Path, UriKind.Relative));
                         break;
                     default:
@@ -103,9 +110,27 @@ namespace CacheClearer
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            cleanCache.cleanAppCache(appGuid);
+            var saved = cleanCache.cleanAppCache(appGuid);
             refreshInfos();
-            MessageBox.Show("Cache cleared!");
+            MessageBox.Show("Cache cleared! You saved " + Utils.readableFileSize(saved));
+        }
+
+        /* Chart */
+
+        public class PData
+        {
+            public string title { get; set; }
+            public double value { get; set; }
+        }
+        void updateChart()
+        {
+            ObservableCollection<PData> data = new ObservableCollection<PData>();
+            for (int i = 0; i < sizeByType.Length; i++)
+            {
+                if (sizeByType[i] > 0)
+                data.Add(new PData() { title = ((FileTypes.FileType)i).ToString(), value = sizeByType[i] });
+            }
+            pieChart.DataSource = data;
         }
     }
 }

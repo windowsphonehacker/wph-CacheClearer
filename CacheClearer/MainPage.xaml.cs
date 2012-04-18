@@ -92,14 +92,15 @@ namespace CacheClearer
                 return;
             }
 
+            int saved = 0;
+
             foreach (AppListItem item in listBox1.Items)
             {
                 System.Diagnostics.Debug.WriteLine(item);
-                cleanCache.cleanAppCache(item.Guid);
+                saved += cleanCache.cleanAppCache(item.Guid);
             }
 
-            //TODO: add an indicator of how much was saved
-            MessageBox.Show("Cache cleaned.");
+            MessageBox.Show("Cache cleaned.\n\nYou saved " + Utils.readableFileSize(saved) + " of storage space.");
         }
 
     }
