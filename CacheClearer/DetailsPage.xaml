@@ -29,7 +29,7 @@
                     <amq:PieChart x:Name="pieChart" 
                           DataSource="{Binding Data}"
                           TitleMemberPath="title" 
-                          ValueMemberPath="value" Height="259" Margin="-42,106,16,242" Width="482" DataContext="{Binding}">
+                          ValueMemberPath="value" Height="393" Margin="4,112,0,102" Width="452" DataContext="{Binding}">
                     </amq:PieChart>
                     <Button Content="Clear cache" Height="72" HorizontalAlignment="Left" Margin="-6,534,0,0" Name="button1" VerticalAlignment="Top" Width="194" Click="button1_Click" />
                 </Grid>
@@ -38,13 +38,12 @@
                 <ListBox Height="603" HorizontalAlignment="Left" Margin="4,3,0,0" Name="filesBox" VerticalAlignment="Top" Width="453" SelectionChanged="filesBox_SelectionChanged" />
 
             </controls:PivotItem>
-            
+            <!--
             <controls:PivotItem Header="Images">
-                <!-- Is this supposed to display image previews? Not sure how to handle that when they
-                are outside of the app sandbox. -->
+                Maybe image previews if there's need for it. Might be possible with Root Tools SDK's FileStream.
                 <Grid/>
-            </controls:PivotItem>
-            
+            </controls:PivotItem> -->
+
         </controls:Pivot>
     </Grid>
 

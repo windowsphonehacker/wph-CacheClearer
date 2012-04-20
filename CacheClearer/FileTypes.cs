@@ -15,6 +15,7 @@ namespace CacheClearer
     public class FileTypes
     {
         public enum FileType { Image = 0, CacheIndex, Html, Other }
+        public static int FileTypeEnumSize = 4;
         public static FileType getFileType(string extension)
         {
             switch (extension)

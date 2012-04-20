@@ -38,7 +38,7 @@ namespace CacheClearer
         }
         private void refreshInfos()
         {
-            sizeByType = new int[4];
+            sizeByType = new int[FileTypes.FileTypeEnumSize];
 
             filesBox.Items.Clear();
             cachedFilesBlock.Text = "Unknown";

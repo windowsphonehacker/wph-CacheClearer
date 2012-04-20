@@ -19,59 +19,16 @@ namespace CacheClearer
         public MainPage()
         {
             InitializeComponent();
-            listCacheApps();
-        }
-
-        public void listCacheApps()
-        {
-
-            // FileSystem
-
             if (!WP7RootToolsSDK.Environment.HasRootAccess())
             {
                 MessageBox.Show("No root access. Please allow through Root Tools");
                 return;
             }
-
-            WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder("\\Applications\\Data\\");
-            List<WP7RootToolsSDK.FileSystemEntry> apps = folder.GetSubItems();
-            foreach (WP7RootToolsSDK.FileSystemEntry app in apps)
-            {
-                if (app.IsFolder)
-                {
-                    List<WP7RootToolsSDK.FileSystemEntry> items = ((WP7RootToolsSDK.Folder)app).GetSubItems();
-                    String appName = WP7RootToolsSDK.Applications.GetApplicationName(new Guid(app.Name));
-                    System.Diagnostics.Debug.WriteLine(appName + " - " + app.Name);
-                    String cachePath = app.Path + "\\Data\\Cache\\";
-                    if (WP7RootToolsSDK.FileSystem.FileExists(cachePath))
-                    {
-                        //WP7RootToolsSDK.Folder CacheFolder = WP7RootToolsSDK.FileSystem.GetFolder(cachePath);
-                        listBox1.Items.Add(new AppListItem(app.Name, appName));
-                    }
-
-                    System.Diagnostics.Debug.WriteLine("");
-                }
-            }
-
-
+            // Set the data context of the listbox control to the sample data
+            DataContext = App.ViewModel;
+            this.Loaded += new RoutedEventHandler(MainPage_Loaded);
         }
-        public class AppListItem
-        {
-            public string Guid;
-            public string AppName;
 
-            public AppListItem() { }
-            public AppListItem(string Guid, string AppName)
-            {
-                this.Guid = Guid;
-                this.AppName = AppName;
-            }
-
-            public override string ToString()
-            {
-                return AppName + " - " + Guid.ToString();
-            }
-        }
 
         private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -79,9 +36,12 @@ namespace CacheClearer
             if (listBox1.SelectedIndex == -1)
                 return;
 
-            AppListItem item = (AppListItem)listBox1.SelectedItem;
+            AppListItemViewModel item = (AppListItemViewModel)listBox1.SelectedItem;
             // Navigate to the new page
-            NavigationService.Navigate(new Uri("/DetailsPage.xaml?appguid=" + item.Guid, UriKind.Relative));
+            NavigationService.Navigate(new Uri("/DetailsPage.xaml?appguid=" + item.LineTwo, UriKind.Relative));
+
+            // Reset selected index to -1 (no selection)
+            listBox1.SelectedIndex = -1;
 
         }
 
@@ -94,13 +54,21 @@ namespace CacheClearer
 
             int saved = 0;
 
-            foreach (AppListItem item in listBox1.Items)
+            foreach (AppListItemViewModel item in listBox1.Items)
             {
                 System.Diagnostics.Debug.WriteLine(item);
-                saved += cleanCache.cleanAppCache(item.Guid);
+                saved += cleanCache.cleanAppCache(item.LineTwo);
             }
 
             MessageBox.Show("Cache cleaned.\n\nYou saved " + Utils.readableFileSize(saved) + " of storage space.");
+        }
+        // Load data for the ViewModel Items
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!App.ViewModel.IsDataLoaded)
+            {
+                App.ViewModel.LoadData();
+            }
         }
 
     }

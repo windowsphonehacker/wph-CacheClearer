@@ -28,7 +28,16 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox Height="529" HorizontalAlignment="Left" Margin="6,6,0,0" Name="listBox1" VerticalAlignment="Top" Width="450" SelectionChanged="listBox1_SelectionChanged" />
+            <ListBox x:Name="listBox1" Margin="0,0,-12,0" ItemsSource="{Binding Items}" SelectionChanged="listBox1_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,0,0,17" Width="432" Height="78">
+                            <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                            <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <Button Content="Quick Clean" Height="72" HorizontalAlignment="Left" Margin="-6,534,0,0" Name="button1" VerticalAlignment="Top" Width="194" Click="button1_Click" />
         </Grid>
     </Grid>
