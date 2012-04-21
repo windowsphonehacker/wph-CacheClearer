@@ -59,5 +59,30 @@ namespace CacheClearer
             // }
             return fileList;
         }
+        public static uint getTotalCacheSize()
+        {
+            uint cacheSize = 0;
+            WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder("\\Applications\\Data\\");
+            List<WP7RootToolsSDK.FileSystemEntry> apps = folder.GetSubItems();
+            foreach (WP7RootToolsSDK.FileSystemEntry app in apps)
+            {
+                if (app.IsFolder)
+                {
+                    List<WP7RootToolsSDK.FileSystemEntry> items = ((WP7RootToolsSDK.Folder)app).GetSubItems();
+                    System.Diagnostics.Debug.WriteLine(app.Name);
+                    String cachePath = app.Path + "\\Data\\Cache\\";
+                    if (WP7RootToolsSDK.FileSystem.FileExists(cachePath))
+                    {
+                        foreach (WP7RootToolsSDK.File file in getFilesInSubFolders(cachePath))
+                        {
+                            cacheSize += file.Size;
+                        }
+                    }
+
+                    System.Diagnostics.Debug.WriteLine("");
+                }
+            }
+            return cacheSize;
+        }
     }
 }

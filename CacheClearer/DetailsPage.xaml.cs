@@ -39,6 +39,7 @@ namespace CacheClearer
         }
         private void refreshInfos()
         {
+            GlobalLoading.Instance.IsLoading = true;
             sizeByType = new int[FileTypes.FileTypeEnumSize];
 
             filesBox.Items.Clear();
@@ -65,6 +66,7 @@ namespace CacheClearer
             System.Diagnostics.Debug.WriteLine(sizeByType[1]);
             System.Diagnostics.Debug.WriteLine(sizeByType[2]);
             System.Diagnostics.Debug.WriteLine(sizeByType[3]);
+            GlobalLoading.Instance.IsLoading = false;
         }
         public class FileListItem
         {
@@ -116,8 +118,10 @@ namespace CacheClearer
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            GlobalLoading.Instance.IsLoading = true;
             var saved = cleanCache.cleanAppCache(appGuid);
             refreshInfos();
+            GlobalLoading.Instance.IsLoading = false;
             MessageBox.Show("Cache cleared! You saved " + Utils.readableFileSize(saved));
         }
 

@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Scheduler;
 
 namespace CacheClearer
 {
@@ -24,6 +25,7 @@ namespace CacheClearer
                 MessageBox.Show("No root access. Please allow through Root Tools");
                 return;
             }
+
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
@@ -38,6 +40,7 @@ namespace CacheClearer
 
             AppListItemViewModel item = (AppListItemViewModel)listBox1.SelectedItem;
             // Navigate to the new page
+            //GlobalLoading.Instance.IsLoading = true;
             NavigationService.Navigate(new Uri("/DetailsPage.xaml?appguid=" + item.LineTwo, UriKind.Relative));
 
             // Reset selected index to -1 (no selection)
@@ -45,13 +48,13 @@ namespace CacheClearer
 
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("This will permanently erase cache files from your phone.", "Warning", MessageBoxButton.OKCancel) != MessageBoxResult.OK)
             {
                 return;
             }
-
+            GlobalLoading.Instance.IsLoading = true;
             int saved = 0;
 
             foreach (AppListItemViewModel item in listBox1.Items)
@@ -59,7 +62,7 @@ namespace CacheClearer
                 System.Diagnostics.Debug.WriteLine(item);
                 saved += cleanCache.cleanAppCache(item.LineTwo);
             }
-
+            GlobalLoading.Instance.IsLoading = false;
             MessageBox.Show("Cache cleaned.\n\nYou saved " + Utils.readableFileSize(saved) + " of storage space.");
         }
         // Load data for the ViewModel Items
@@ -69,6 +72,19 @@ namespace CacheClearer
             {
                 App.ViewModel.LoadData();
             }
+        }
+
+
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            // Navigate to the new page
+            NavigationService.Navigate(new Uri("/SettingsPage.xaml?page=settings", UriKind.Relative));
+        }
+        private void AboutButton_Click(object sender, EventArgs e)
+        {
+            // Navigate to the new page
+            NavigationService.Navigate(new Uri("/SettingsPage.xaml?page=about", UriKind.Relative));
         }
 
     }

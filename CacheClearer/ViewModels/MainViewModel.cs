@@ -60,7 +60,7 @@ namespace CacheClearer
         /// </summary>
         public void LoadData()
         {
-
+            GlobalLoading.Instance.IsLoading = true;
             WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder("\\Applications\\Data\\");
             List<WP7RootToolsSDK.FileSystemEntry> apps = folder.GetSubItems();
             foreach (WP7RootToolsSDK.FileSystemEntry app in apps)
@@ -80,6 +80,7 @@ namespace CacheClearer
                     System.Diagnostics.Debug.WriteLine("");
                 }
             }
+            GlobalLoading.Instance.IsLoading = false;
             this.IsDataLoaded = true;
         }
 

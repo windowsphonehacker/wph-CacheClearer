@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheClearer", "CacheClearer\CacheClearer.csproj", "{361D7360-7520-4522-BEDB-E65B3DADA89C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileUpdaterAgent", "TileUpdaterAgent\TileUpdaterAgent.csproj", "{B741F12C-2AE8-49FF-9448-20991CE1E3CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheClearerLibrary", "CacheClearerLibrary\CacheClearerLibrary.csproj", "{34DADD6F-5600-4FA8-84D6-55987737AEBD}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -19,6 +23,14 @@ Global
 		{361D7360-7520-4522-BEDB-E65B3DADA89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{361D7360-7520-4522-BEDB-E65B3DADA89C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{361D7360-7520-4522-BEDB-E65B3DADA89C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B741F12C-2AE8-49FF-9448-20991CE1E3CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B741F12C-2AE8-49FF-9448-20991CE1E3CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B741F12C-2AE8-49FF-9448-20991CE1E3CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B741F12C-2AE8-49FF-9448-20991CE1E3CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34DADD6F-5600-4FA8-84D6-55987737AEBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34DADD6F-5600-4FA8-84D6-55987737AEBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34DADD6F-5600-4FA8-84D6-55987737AEBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34DADD6F-5600-4FA8-84D6-55987737AEBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
