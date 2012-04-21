@@ -15,7 +15,10 @@ namespace CacheClearer
     {
         public static string getFileExtension(string fileName)
         {
+            
             string extension = "";
+            extension = System.IO.Path.GetExtension(fileName).Substring(1);
+            /*
             char[] arr = fileName.ToCharArray();
             int index = 0;
 
@@ -31,7 +34,7 @@ namespace CacheClearer
             {
                 extension = extension + arr[x];
             }
-
+            */
             return extension;
 
         }
