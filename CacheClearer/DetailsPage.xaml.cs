@@ -16,6 +16,7 @@ namespace CacheClearer
 {
     public partial class DetailsPage : PhoneApplicationPage
     {
+        //test
         int[] sizeByType;
 
         public string appGuid = "";
