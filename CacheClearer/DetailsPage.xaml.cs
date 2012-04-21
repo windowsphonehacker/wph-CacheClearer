@@ -95,14 +95,19 @@ namespace CacheClearer
                 //TODO: Add fiinix credits for dllimport
                 switch (FileTypes.getFileType(ext))
                 {
-                    case FileTypes.FileType.Image:
+                    //Image case not needed as the default handles images too.
+                    /*case FileTypes.FileType.Image:
                         CSharp___DllImport.Phone.AppLauncher.OpenPicture(item.File.Path);
-                        break;
+                        break;*/
                     case FileTypes.FileType.Html:
                         NavigationService.Navigate(new Uri("/FileViewers/HTMLViewer.xaml?path=" + item.File.Path, UriKind.Relative));
                         break;
                     default:
-                        MessageBox.Show("I don't know how to open this file", "Error", MessageBoxButton.OK);
+                        CSharp___DllImport.Win32ErrorCode errcode = ((CSharp___DllImport.Win32ErrorCode)CSharp___DllImport.DllImportCaller.lib.ShellExecuteEx7(item.File.Path, ""));
+                        if (errcode != CSharp___DllImport.Win32ErrorCode.NO_ERROR)
+                        {
+                            MessageBox.Show("I don't know how to open this file!\nError code: " + errcode.ToString(), "Error", MessageBoxButton.OK);
+                        }
                         break;
                 }
             }
@@ -128,7 +133,7 @@ namespace CacheClearer
             for (int i = 0; i < sizeByType.Length; i++)
             {
                 if (sizeByType[i] > 0)
-                data.Add(new PData() { title = ((FileTypes.FileType)i).ToString(), value = sizeByType[i] });
+                    data.Add(new PData() { title = ((FileTypes.FileType)i).ToString(), value = sizeByType[i] });
             }
             pieChart.DataSource = data;
         }
