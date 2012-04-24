@@ -15,7 +15,7 @@ namespace CacheClearer
     {
         public static string getFileExtension(string fileName)
         {
-            
+
             string extension = "";
             extension = System.IO.Path.GetExtension(fileName).Substring(1);
             /*

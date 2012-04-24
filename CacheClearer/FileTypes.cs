@@ -26,18 +26,18 @@ namespace CacheClearer
                 case "bmp":
                 case "gif":
                     return FileType.Image;
-                    
+
                 case "html":
                 case "htm":
                     return FileType.Html;
-                    
+
                 case "dat":
                     return FileType.CacheIndex;
-                    
+
                 default:
                     return FileType.Other;
             }
-            
+
         }
     }
 }

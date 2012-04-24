@@ -25,9 +25,9 @@ namespace CacheClearer
 
             foreach (WP7RootToolsSDK.File file in files)
             {
-                    WP7RootToolsSDK.FileSystem.DeleteFile(file.Path);
-                    System.Diagnostics.Debug.WriteLine("Deleted " + file.Path);
-                    totalSize += (int)file.Size;
+                WP7RootToolsSDK.FileSystem.DeleteFile(file.Path);
+                System.Diagnostics.Debug.WriteLine("Deleted " + file.Path);
+                totalSize += (int)file.Size;
             }
 
             return totalSize;
@@ -38,25 +38,25 @@ namespace CacheClearer
         {
             List<WP7RootToolsSDK.File> fileList = new List<WP7RootToolsSDK.File>();
 
-             try
+            try
             {
-            WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder(path);
-            foreach (WP7RootToolsSDK.FileSystemEntry item in folder.GetSubItems())
-            {
-                if (item.IsFile)
+                WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder(path);
+                foreach (WP7RootToolsSDK.FileSystemEntry item in folder.GetSubItems())
                 {
-                    fileList.Add((WP7RootToolsSDK.File)item);
-                }
-                else
-                {
-                    fileList.AddRange(getFilesInSubFolders(item.Path));
+                    if (item.IsFile)
+                    {
+                        fileList.Add((WP7RootToolsSDK.File)item);
+                    }
+                    else
+                    {
+                        fileList.AddRange(getFilesInSubFolders(item.Path));
+                    }
                 }
             }
-             }
             catch (Exception ex)
-             {
-            System.Diagnostics.Debug.WriteLine(ex.Message);
-             }
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
             return fileList;
         }
         public static uint getTotalCacheSize()

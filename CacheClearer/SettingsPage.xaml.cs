@@ -25,12 +25,9 @@ namespace CacheClearer
             button2.Visibility = System.Windows.Visibility.Visible;
 #endif
 
-            if (findAgent())
-                toggleSwitch_Task.IsChecked = true;
-            if (getSetting("updatetile"))
-                toggleSwitch_Tile.IsChecked = true;
-            if (getSetting("clean"))
-                toggleSwitch_Clean.IsChecked = true;
+            toggleSwitch_Task.IsChecked = findAgent();
+            toggleSwitch_Tile.IsChecked = getSetting("updatetile");
+            toggleSwitch_Clean.IsChecked = getSetting("clean");
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -56,7 +53,7 @@ namespace CacheClearer
                 ScheduledActionService.Remove("TileUpdaterAgent");
             }
             task = new PeriodicTask("TileUpdaterAgent");
-            task.Description = "This demonstrates a periodic task.";
+            task.Description = "This task updatest the tile and cleans the cache.";
 
             ScheduledActionService.Add(task);
             ScheduledActionService.LaunchForTest("TileUpdaterAgent", TimeSpan.FromSeconds(10));
@@ -64,16 +61,26 @@ namespace CacheClearer
             System.Diagnostics.Debug.WriteLine("Agent added (hopefully)");
         }
 
-        void addAgent()
+        Boolean addAgent()
         {
-            if (findAgent())
-                removeAgent();
+            try
+            {
+                if (findAgent())
+                    removeAgent();
 
-            task = new PeriodicTask("TileUpdaterAgent");
-            task.Description = "Periodically does cache cleaning functions";
+                task = new PeriodicTask("TileUpdaterAgent");
+                task.Description = "Periodically does cache cleaning functions";
 
-            ScheduledActionService.Add(task);
-            ScheduledActionService.LaunchForTest("TileUpdaterAgent", TimeSpan.FromSeconds(10));
+                ScheduledActionService.Add(task);
+                ScheduledActionService.LaunchForTest("TileUpdaterAgent", TimeSpan.FromSeconds(10));
+                return true;
+            }
+            catch (Exception)
+            {
+                toggleSwitch_Task.IsChecked = false;
+                MessageBox.Show("The task could not be enabled. You might have background tasks disabled in settings.", "Error", MessageBoxButton.OK);
+                return false;
+            }
         }
         void removeAgent()
         {
@@ -104,13 +111,20 @@ namespace CacheClearer
 
         private void toggleSwitch_Task_Checked(object sender, RoutedEventArgs e)
         {
-            addAgent();
-            toggleSwitch_Tile.Visibility = System.Windows.Visibility.Visible;
-            toggleSwitch_Clean.Visibility = System.Windows.Visibility.Visible;
+            if (addAgent())
+            {
+                toggleSwitch_Tile.Visibility = System.Windows.Visibility.Visible;
+                if (!(bool)toggleSwitch_Clean.IsChecked)
+                {
+                    toggleSwitch_Tile.IsChecked = true;
+                }
+                toggleSwitch_Clean.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         private void toggleSwitch_Task_Unchecked(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("Task unchecked.");
             removeAgent();
             toggleSwitch_Tile.Visibility = System.Windows.Visibility.Collapsed;
             toggleSwitch_Clean.Visibility = System.Windows.Visibility.Collapsed;
@@ -124,10 +138,12 @@ namespace CacheClearer
         void setSetting(string key, bool val)
         {
             //remove if it's there
-            try 
+            try
             {
                 IsolatedStorageSettings.ApplicationSettings.Remove(key);
-            } catch {
+            }
+            catch
+            {
             }
             IsolatedStorageSettings.ApplicationSettings.Add(key, val);
             IsolatedStorageSettings.ApplicationSettings.Save();
@@ -149,11 +165,19 @@ namespace CacheClearer
         private void toggleSwitch_Clean_Unchecked(object sender, RoutedEventArgs e)
         {
             setSetting("clean", false);
+            if (!(bool)toggleSwitch_Tile.IsChecked)
+            {
+                toggleSwitch_Task.IsChecked = false;
+            }
         }
 
         private void toggleSwitch_Tile_Unchecked(object sender, RoutedEventArgs e)
         {
             setSetting("updatetile", false);
+            if (!(bool)toggleSwitch_Clean.IsChecked)
+            {
+                toggleSwitch_Task.IsChecked = false;
+            }
         }
     }
 }

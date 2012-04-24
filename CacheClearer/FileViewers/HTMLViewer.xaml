@@ -30,7 +30,7 @@
             <phone:WebBrowser HorizontalAlignment="Left" Margin="6,6,0,0" Name="webBrowser1" VerticalAlignment="Top" Height="690" Width="450" />
         </Grid>
     </Grid>
- 
+
     <!--Sample code showing usage of ApplicationBar-->
     <!--<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
