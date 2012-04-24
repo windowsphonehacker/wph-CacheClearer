@@ -17,7 +17,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Name="MainPivot" Title="CacheCleaner">
+        <controls:Pivot Name="MainPivot" Title="CacheClearer">
             <!--Pivot item one-->
             <controls:PivotItem Name="SettingsPivotItem" Header="Settings">
                 <Grid>
@@ -27,7 +27,13 @@
 
             <!--Pivot item two-->
             <controls:PivotItem Name="AboutPivotItem" Header="About">
-                <Grid/>
+                <Grid>
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="5,-1,0,0" Name="textBlock1" Text="CacheClearer 1.0" VerticalAlignment="Top" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="6,40,0,0" Name="textBlock2" Text="Developed by jessenic and Jaxbot" VerticalAlignment="Top" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="7,81,0,0" Name="textBlock3" Text="Uses DllImport by fiinix" VerticalAlignment="Top" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="6,123,0,0" Name="textBlock4" Text="Powered by Heathcliff74's WP7 Root Tools SDK" VerticalAlignment="Top" />
+                    <!-- TODO: links? -->
+                </Grid>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
