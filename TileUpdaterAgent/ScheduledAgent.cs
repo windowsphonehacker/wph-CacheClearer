@@ -2,6 +2,7 @@
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using System.Linq;
+using System.IO.IsolatedStorage;
 namespace TileUpdaterAgent
 {
     public class ScheduledAgent : ScheduledTaskAgent
@@ -46,22 +47,40 @@ namespace TileUpdaterAgent
         protected override void OnInvoke(ScheduledTask task)
         {
             System.Diagnostics.Debug.WriteLine("Launching the agent...");
-            uint bytes = CacheClearer.cleanCache.getTotalCacheSize();
-            //TODO: Add automatic cleaning, tile updates etc.
 
-            // Execute periodic task actions here.
-            ShellTile TileToFind = ShellTile.ActiveTiles.First();
-            if (TileToFind != null)
+            if (getSetting("clean"))
             {
-                StandardTileData NewTileData = new StandardTileData
-                {
-                    BackContent = CacheClearer.Utils.readableFileSize(bytes),
-                    BackTitle = "Cache Size"
-                };
-                TileToFind.Update(NewTileData);
+                //Clean cache
+                CacheClearer.cleanCache.clearAll();
             }
+
+            if (getSetting("updatetile"))
+            {
+                uint bytes = CacheClearer.cleanCache.getTotalCacheSize();
+
+                // Execute periodic task actions here.
+                ShellTile TileToFind = ShellTile.ActiveTiles.First();
+                if (TileToFind != null)
+                {
+                    StandardTileData NewTileData = new StandardTileData
+                    {
+                        BackContent = CacheClearer.Utils.readableFileSize(bytes),
+                        BackTitle = "Cache Size"
+                    };
+                    TileToFind.Update(NewTileData);
+                }
+            }
+
+
             NotifyComplete();
         }
+        bool getSetting(string key)
+        {
+            bool val = false;
 
+            IsolatedStorageSettings.ApplicationSettings.TryGetValue(key, out val);
+
+            return val;
+        }
     }
 }

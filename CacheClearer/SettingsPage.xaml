@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolbox="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -21,6 +22,9 @@
             <!--Pivot item one-->
             <controls:PivotItem Name="SettingsPivotItem" Header="Settings">
                 <Grid>
+                    <toolbox:ToggleSwitch Name="toggleSwitch_Task" Header="Enable background task" Checked="toggleSwitch_Task_Checked" Unchecked="toggleSwitch_Task_Unchecked"></toolbox:ToggleSwitch>
+                    <toolbox:ToggleSwitch Visibility="Collapsed" Name="toggleSwitch_Tile" Header="Update tile" Checked="toggleSwitch_Tile_Checked" Margin="0,84,0,-84" Unchecked="toggleSwitch_Tile_Unchecked"></toolbox:ToggleSwitch>
+                    <toolbox:ToggleSwitch Visibility="Collapsed" Name="toggleSwitch_Clean" Header="Clean in background" Margin="0,168,0,-84" Checked="toggleSwitch_Clean_Checked" Unchecked="toggleSwitch_Clean_Unchecked"></toolbox:ToggleSwitch>
                     <Button Content="Task test" Height="72" HorizontalAlignment="Left" Margin="276,534,0,0" Name="button2" VerticalAlignment="Top" Width="160" Click="button2_Click" Visibility="Collapsed" />
                 </Grid>
             </controls:PivotItem>
@@ -28,11 +32,14 @@
             <!--Pivot item two-->
             <controls:PivotItem Name="AboutPivotItem" Header="About">
                 <Grid>
-                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="5,-1,0,0" Name="textBlock1" Text="CacheClearer 1.0" VerticalAlignment="Top" />
-                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="6,40,0,0" Name="textBlock2" Text="Developed by jessenic and Jaxbot" VerticalAlignment="Top" />
-                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="7,81,0,0" Name="textBlock3" Text="Uses DllImport by fiinix" VerticalAlignment="Top" />
-                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="6,123,0,0" Name="textBlock4" Text="Powered by Heathcliff74's WP7 Root Tools SDK" VerticalAlignment="Top" />
-                    <!-- TODO: links? -->
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="5,-1,0,0" Name="textBlock1" Text="CacheClearer 1.0" VerticalAlignment="Top" Grid.ColumnSpan="2" FontWeight="Bold" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="5,37,0,0" Name="textBlock2" Text="Developed by" VerticalAlignment="Top" FontWeight="SemiBold" />
+                    <TextBlock Height="34" HorizontalAlignment="Left" Margin="17,66,0,0" Name="textBlock3" Text="jessenic" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="13,163,0,0" Name="textBlock4" Text="Heathcliff74's WP7 Root Tools SDK" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBlock Grid.Column="1" Height="34" HorizontalAlignment="Left" Margin="16,93,0,0" Name="textBlock5" Text="jaxbot" VerticalAlignment="Top" />
+                    <TextBlock FontWeight="SemiBold" Height="30" HorizontalAlignment="Left" Margin="5,133,0,0" Name="textBlock6" Text="Powered by" VerticalAlignment="Top" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="13,190,0,0" Name="textBlock7" Text="fiinix's DllImport" VerticalAlignment="Top" />
+                    <HyperlinkButton Content="http://windowsphonehacker.com/" Height="30" HorizontalAlignment="Left" Margin="-4,571,0,0" Name="hyperlinkButton1" VerticalAlignment="Top" Width="366" Grid.ColumnSpan="2" Click="hyperlinkButton1_Click" />
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>

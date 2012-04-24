@@ -38,8 +38,8 @@ namespace CacheClearer
         {
             List<WP7RootToolsSDK.File> fileList = new List<WP7RootToolsSDK.File>();
 
-            // try
-            //{
+             try
+            {
             WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder(path);
             foreach (WP7RootToolsSDK.FileSystemEntry item in folder.GetSubItems())
             {
@@ -52,11 +52,11 @@ namespace CacheClearer
                     fileList.AddRange(getFilesInSubFolders(item.Path));
                 }
             }
-            // }
-            //catch (Exception ex)
-            // {
-            //System.Diagnostics.Debug.WriteLine(ex.Message);
-            // }
+             }
+            catch (Exception ex)
+             {
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+             }
             return fileList;
         }
         public static uint getTotalCacheSize()
@@ -73,9 +73,15 @@ namespace CacheClearer
                     String cachePath = app.Path + "\\Data\\Cache\\";
                     if (WP7RootToolsSDK.FileSystem.FileExists(cachePath))
                     {
-                        foreach (WP7RootToolsSDK.File file in getFilesInSubFolders(cachePath))
+                        try
                         {
-                            cacheSize += file.Size;
+                            foreach (WP7RootToolsSDK.File file in getFilesInSubFolders(cachePath))
+                            {
+                                cacheSize += file.Size;
+                            }
+                        }
+                        catch
+                        { //this fails for some reason, sometimes. not sure why.
                         }
                     }
 
@@ -83,6 +89,19 @@ namespace CacheClearer
                 }
             }
             return cacheSize;
+        }
+        public static void clearAll()
+        {
+            WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder("\\Applications\\Data\\");
+            List<WP7RootToolsSDK.FileSystemEntry> apps = folder.GetSubItems();
+            foreach (WP7RootToolsSDK.FileSystemEntry app in apps)
+            {
+                if (app.IsFolder)
+                {
+                    System.Diagnostics.Debug.WriteLine(app.Name);
+                    cleanAppCache(app.Name);
+                }
+            }
         }
     }
 }

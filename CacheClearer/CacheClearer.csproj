@@ -54,6 +54,7 @@
     <Reference Include="CSharp - DllImport, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -124,6 +125,7 @@
     <Content Include="CSharp - DllImport.dll" />
     <Content Include="DllImportMango.dll" />
     <Content Include="Images\Clean.png" />
+    <Content Include="Microsoft.Phone.Controls.Toolkit.dll" />
     <Content Include="NativeIO_Mango.dll" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="WP7Native01ARM.dll" />
