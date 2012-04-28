@@ -28,6 +28,7 @@ namespace CacheClearer
             toggleSwitch_Task.IsChecked = findAgent();
             toggleSwitch_Tile.IsChecked = getSetting("updatetile");
             toggleSwitch_Clean.IsChecked = getSetting("clean");
+            toggleSwitch_Toast.IsChecked = getSetting("toast");
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -53,7 +54,7 @@ namespace CacheClearer
                 ScheduledActionService.Remove("TileUpdaterAgent");
             }
             task = new PeriodicTask("TileUpdaterAgent");
-            task.Description = "This task updatest the tile and cleans the cache.";
+            task.Description = "Periodically does cache cleaning functions.";
 
             ScheduledActionService.Add(task);
             ScheduledActionService.LaunchForTest("TileUpdaterAgent", TimeSpan.FromSeconds(10));
@@ -160,6 +161,7 @@ namespace CacheClearer
         private void toggleSwitch_Clean_Checked(object sender, RoutedEventArgs e)
         {
             setSetting("clean", true);
+            toggleSwitch_Toast.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void toggleSwitch_Clean_Unchecked(object sender, RoutedEventArgs e)
@@ -169,6 +171,7 @@ namespace CacheClearer
             {
                 toggleSwitch_Task.IsChecked = false;
             }
+            toggleSwitch_Toast.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void toggleSwitch_Tile_Unchecked(object sender, RoutedEventArgs e)
@@ -178,6 +181,14 @@ namespace CacheClearer
             {
                 toggleSwitch_Task.IsChecked = false;
             }
+        }
+        private void toggleSwitch_Toast_Checked(object sender, RoutedEventArgs e)
+        {
+            setSetting("toast", true);
+        }
+        private void toggleSwitch_Toast_Unchecked(object sender, RoutedEventArgs e)
+        {
+            setSetting("toast", false);
         }
     }
 }

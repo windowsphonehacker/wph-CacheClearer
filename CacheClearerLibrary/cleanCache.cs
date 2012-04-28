@@ -90,8 +90,9 @@ namespace CacheClearer
             }
             return cacheSize;
         }
-        public static void clearAll()
+        public static int clearAll()
         {
+            int cleared = 0;
             WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder("\\Applications\\Data\\");
             List<WP7RootToolsSDK.FileSystemEntry> apps = folder.GetSubItems();
             foreach (WP7RootToolsSDK.FileSystemEntry app in apps)
@@ -99,9 +100,10 @@ namespace CacheClearer
                 if (app.IsFolder)
                 {
                     System.Diagnostics.Debug.WriteLine(app.Name);
-                    cleanAppCache(app.Name);
+                    cleared += cleanAppCache(app.Name);
                 }
             }
+            return cleared;
         }
     }
 }

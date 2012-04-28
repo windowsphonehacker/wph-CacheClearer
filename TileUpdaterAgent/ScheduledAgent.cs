@@ -3,6 +3,7 @@ using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using System.Linq;
 using System.IO.IsolatedStorage;
+using System;
 namespace TileUpdaterAgent
 {
     public class ScheduledAgent : ScheduledTaskAgent
@@ -47,25 +48,41 @@ namespace TileUpdaterAgent
         protected override void OnInvoke(ScheduledTask task)
         {
             System.Diagnostics.Debug.WriteLine("Launching the agent...");
-
+            int cleared = -1;
             if (getSetting("clean"))
             {
                 //Clean cache
-                CacheClearer.cleanCache.clearAll();
+                cleared = CacheClearer.cleanCache.clearAll();
+                if (getSetting("toast"))
+                {
+                    ShellToast toast = new ShellToast();
+                    toast.Content = "Cleared " + CacheClearer.Utils.readableFileSize(cleared);
+                    toast.Title = "CacheClearer";
+                    toast.Show();
+                }
             }
 
             if (getSetting("updatetile"))
             {
-                uint bytes = CacheClearer.cleanCache.getTotalCacheSize();
-
+                if (cleared >= 0)
+                {
+                    BackTitle = "Cache cleared";
+                    BackContent = DateTime.Now.ToString() + "\n" + CacheClearer.Utils.readableFileSize(cleared);
+                }
+                else
+                {
+                    uint bytes = CacheClearer.cleanCache.getTotalCacheSize();
+                    BackContent = DateTime.Now.ToString() + "\n" + CacheClearer.Utils.readableFileSize(bytes);
+                    BackTitle = "Cache Size";
+                }
                 // Execute periodic task actions here.
                 ShellTile TileToFind = ShellTile.ActiveTiles.First();
                 if (TileToFind != null)
                 {
                     StandardTileData NewTileData = new StandardTileData
                     {
-                        BackContent = CacheClearer.Utils.readableFileSize(bytes),
-                        BackTitle = "Cache Size"
+                        BackContent = BackContent,
+                        BackTitle = BackTitle
                     };
                     TileToFind.Update(NewTileData);
                 }
@@ -82,5 +99,8 @@ namespace TileUpdaterAgent
 
             return val;
         }
+
+        string BackContent;
+        string BackTitle;
     }
 }

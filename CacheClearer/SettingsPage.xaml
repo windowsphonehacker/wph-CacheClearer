@@ -25,6 +25,7 @@
                     <toolbox:ToggleSwitch Name="toggleSwitch_Task" Header="Enable background task" Checked="toggleSwitch_Task_Checked" Unchecked="toggleSwitch_Task_Unchecked"></toolbox:ToggleSwitch>
                     <toolbox:ToggleSwitch Visibility="Collapsed" Name="toggleSwitch_Tile" Header="Update tile" Checked="toggleSwitch_Tile_Checked" Margin="0,84,0,-84" Unchecked="toggleSwitch_Tile_Unchecked"></toolbox:ToggleSwitch>
                     <toolbox:ToggleSwitch Visibility="Collapsed" Name="toggleSwitch_Clean" Header="Clean in background" Margin="0,168,0,-84" Checked="toggleSwitch_Clean_Checked" Unchecked="toggleSwitch_Clean_Unchecked"></toolbox:ToggleSwitch>
+                    <toolbox:ToggleSwitch Visibility="Collapsed" Name="toggleSwitch_Toast" Header="Show toast after successful cleaning" Margin="0,252,0,-84" Checked="toggleSwitch_Toast_Checked" Unchecked="toggleSwitch_Toast_Unchecked"></toolbox:ToggleSwitch>
                     <Button Content="Task test" Height="72" HorizontalAlignment="Left" Margin="276,534,0,0" Name="button2" VerticalAlignment="Top" Width="160" Click="button2_Click" Visibility="Collapsed" />
                 </Grid>
             </controls:PivotItem>
