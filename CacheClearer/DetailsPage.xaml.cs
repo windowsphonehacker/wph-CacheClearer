@@ -45,7 +45,7 @@ namespace CacheClearer
             filesBox.Items.Clear();
             cachedFilesBlock.Text = "Unknown";
             cacheSizeBlock.Text = "Unknown";
-            List<WP7RootToolsSDK.File> fileList = cleanCache.getFilesInSubFolders(@"\Applications\Data\" + appGuid + @"\Data\Cache\");
+            List<WP7RootToolsSDK.FileSystemEntry> fileList = cleanCache.getFilesInSubFolders(@"\Applications\Data\" + appGuid + @"\Data\Cache\");
             int files = 0;
             uint filesizes = 0;
             foreach (WP7RootToolsSDK.File file in fileList)
@@ -106,10 +106,13 @@ namespace CacheClearer
                         NavigationService.Navigate(new Uri("/FileViewers/HTMLViewer.xaml?path=" + item.File.Path, UriKind.Relative));
                         break;
                     default:
-                        CSharp___DllImport.Win32ErrorCode errcode = ((CSharp___DllImport.Win32ErrorCode)CSharp___DllImport.DllImportCaller.lib.ShellExecuteEx7(item.File.Path, ""));
-                        if (errcode != CSharp___DllImport.Win32ErrorCode.NO_ERROR)
+                        try
                         {
-                            MessageBox.Show("I don't know how to open this file!\nError code: " + errcode.ToString(), "Error", MessageBoxButton.OK);
+                            WP7RootToolsSDK.Environment.ShellExecute(item.File.Path);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("I don't know how to open this file!\nError: " + ex.Message, "Error", MessageBoxButton.OK);
                         }
                         break;
                 }

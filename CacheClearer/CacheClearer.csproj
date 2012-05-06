@@ -51,7 +51,6 @@
     <Reference Include="AmCharts.Windows.QuickCharts.WP">
       <HintPath>..\..\..\..\..\Downloads\amwpquickdemo_1.1.beta.r2\QuickChartsDemoWP7\AmCharts.Windows.QuickCharts.WP.dll</HintPath>
     </Reference>
-    <Reference Include="CSharp - DllImport, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
@@ -62,7 +61,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
-    <Reference Include="WP7RootToolsSDK-0.1.6.0, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="WP7RootToolsSDK-0.2.1.0, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -122,15 +121,11 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="CSharp - DllImport.dll" />
-    <Content Include="DllImportMango.dll" />
     <Content Include="Images\Clean.png" />
     <Content Include="Microsoft.Phone.Controls.Toolkit.dll" />
-    <Content Include="NativeIO_Mango.dll" />
     <Content Include="SplashScreenImage.jpg" />
-    <Content Include="WP7Native01ARM.dll" />
-    <Content Include="WP7RootToolsSDK-0.1.6.0.dll" />
-    <Content Include="WP7RootToolsSDKNative-0.1.6.0.dll" />
+    <Content Include="WP7RootToolsSDK-0.2.1.0.dll" />
+    <Content Include="WP7RootToolsSDKNative-0.2.1.0.dll" />
     <Content Include="WPInteropManifest.xml" />
   </ItemGroup>
   <ItemGroup>
