@@ -119,6 +119,10 @@ namespace CacheClearer
                 {
                     toggleSwitch_Tile.IsChecked = true;
                 }
+                else
+                {
+                    toggleSwitch_Toast.Visibility = System.Windows.Visibility.Visible;
+                }
                 toggleSwitch_Clean.Visibility = System.Windows.Visibility.Visible;
             }
         }
@@ -129,6 +133,7 @@ namespace CacheClearer
             removeAgent();
             toggleSwitch_Tile.Visibility = System.Windows.Visibility.Collapsed;
             toggleSwitch_Clean.Visibility = System.Windows.Visibility.Collapsed;
+            toggleSwitch_Toast.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void toggleSwitch_Tile_Checked(object sender, RoutedEventArgs e)

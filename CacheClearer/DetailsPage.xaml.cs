@@ -45,7 +45,7 @@ namespace CacheClearer
             filesBox.Items.Clear();
             cachedFilesBlock.Text = "Unknown";
             cacheSizeBlock.Text = "Unknown";
-            List<WP7RootToolsSDK.FileSystemEntry> fileList = cleanCache.getFilesInSubFolders(@"\Applications\Data\" + appGuid + @"\Data\Cache\");
+            List<WP7RootToolsSDK.File> fileList = cleanCache.getFilesInSubFolders(@"\Applications\Data\" + appGuid + @"\Data\Cache\");
             int files = 0;
             uint filesizes = 0;
             foreach (WP7RootToolsSDK.File file in fileList)

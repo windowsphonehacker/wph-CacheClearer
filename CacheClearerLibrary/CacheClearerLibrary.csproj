@@ -47,8 +47,8 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="mscorlib.extensions" />
-    <Reference Include="WP7RootToolsSDK-0.1.6.0">
-      <HintPath>..\CacheClearer\WP7RootToolsSDK-0.1.6.0.dll</HintPath>
+    <Reference Include="WP7RootToolsSDK-0.2.1.0">
+      <HintPath>..\CacheClearer\WP7RootToolsSDK-0.2.1.0.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
