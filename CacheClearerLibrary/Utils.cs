@@ -17,7 +17,11 @@ namespace CacheClearer
         {
 
             string extension = "";
-            extension = System.IO.Path.GetExtension(fileName).Substring(1);
+            try
+            {
+                extension = System.IO.Path.GetExtension(fileName).Substring(1);
+            }
+            catch (Exception) { }
             /*
             char[] arr = fileName.ToCharArray();
             int index = 0;
