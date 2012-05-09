@@ -118,6 +118,7 @@ namespace CacheClearer
                 // An unhandled exception has occurred; break into the debugger
                 System.Diagnostics.Debugger.Break();
             }
+            MessageBox.Show(e.ExceptionObject.Message + " " + e.ExceptionObject.StackTrace);
         }
 
         #region Phone application initialization

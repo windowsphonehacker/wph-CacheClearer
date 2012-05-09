@@ -41,7 +41,7 @@
                     <TextBlock FontWeight="SemiBold" Height="30" HorizontalAlignment="Left" Margin="5,133,0,0" Name="textBlock6" Text="Powered by" VerticalAlignment="Top" />
                     <TextBlock Height="84" HorizontalAlignment="Left" Margin="14,201,0,0" Name="textBlock7" Text="WP7 Root Tools SDK is copyrighted
 and licensed under terms of 
-www.wp7roottools.com" VerticalAlignment="Top" Width="404" />
+www.wp7roottools.com" VerticalAlignment="Top" Width="404" TextWrapping="Wrap" />
                     <HyperlinkButton Content="http://windowsphonehacker.com/" Height="30" HorizontalAlignment="Left" Margin="-4,571,0,0" Name="hyperlinkButton1" VerticalAlignment="Top" Width="366" Grid.ColumnSpan="2" Click="hyperlinkButton1_Click" />
                 </Grid>
             </controls:PivotItem>

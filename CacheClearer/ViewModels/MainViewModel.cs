@@ -68,7 +68,14 @@ namespace CacheClearer
                 if (app.IsFolder)
                 {
                     List<WP7RootToolsSDK.FileSystemEntry> items = ((WP7RootToolsSDK.Folder)app).GetSubItems();
-                    String appName = WP7RootToolsSDK.Applications.GetApplicationName(new Guid(app.Name));
+                    String appName = "<unknown>";
+                    try
+                    {
+                        appName = WP7RootToolsSDK.Applications.GetApplicationName(new Guid(app.Name));
+                    }
+                    catch
+                    {
+                    }
                     System.Diagnostics.Debug.WriteLine(appName + " - " + app.Name);
                     String cachePath = app.Path + "\\Data\\Cache\\";
                     if (WP7RootToolsSDK.FileSystem.FileExists(cachePath))
