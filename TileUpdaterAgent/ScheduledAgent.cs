@@ -48,17 +48,29 @@ namespace TileUpdaterAgent
         protected override void OnInvoke(ScheduledTask task)
         {
             System.Diagnostics.Debug.WriteLine("Launching the agent...");
+            
             int cleared = -1;
             if (getSetting("clean"))
             {
-                //Clean cache
-                cleared = CacheClearer.cleanCache.clearAll();
-                if (getSetting("toast"))
+                var fires = getIntSetting("taskFireCount");
+                System.Diagnostics.Debug.WriteLine("Task fire count: " + fires);
+                if (fires > 48)
+                { //only run ever 48 launches, or about 24 hours
+                    setSetting("taskFireCount", 0);
+
+                    //Clean cache
+                    cleared = CacheClearer.cleanCache.clearAll();
+                    if (getSetting("toast"))
+                    {
+                        ShellToast toast = new ShellToast();
+                        toast.Content = "Cleared " + CacheClearer.Utils.readableFileSize(cleared);
+                        toast.Title = "CacheClearer";
+                        toast.Show();
+                    }
+                }
+                else
                 {
-                    ShellToast toast = new ShellToast();
-                    toast.Content = "Cleared " + CacheClearer.Utils.readableFileSize(cleared);
-                    toast.Title = "CacheClearer";
-                    toast.Show();
+                    setSetting("taskFireCount", fires + 1);
                 }
             }
 
@@ -99,7 +111,27 @@ namespace TileUpdaterAgent
 
             return val;
         }
+        int getIntSetting(string key)
+        {
+            int val = 0;
 
+            IsolatedStorageSettings.ApplicationSettings.TryGetValue(key, out val);
+
+            return val;
+        }
+        void setSetting(string key, object val)
+        {
+            //remove if it's there
+            try
+            {
+                IsolatedStorageSettings.ApplicationSettings.Remove(key);
+            }
+            catch
+            {
+            }
+            IsolatedStorageSettings.ApplicationSettings.Add(key, val);
+            IsolatedStorageSettings.ApplicationSettings.Save();
+        }
         string BackContent;
         string BackTitle;
     }
