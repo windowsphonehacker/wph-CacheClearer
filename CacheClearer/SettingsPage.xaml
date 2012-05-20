@@ -33,7 +33,7 @@
             <!--Pivot item two-->
             <controls:PivotItem Name="AboutPivotItem" Header="About">
                 <Grid>
-                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="5,-1,0,0" Name="textBlock1" Text="CacheClearer 1.0" VerticalAlignment="Top" Grid.ColumnSpan="2" FontWeight="Bold" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="5,-1,0,0" Name="textBlock1" Text="CacheClearer 1.1" VerticalAlignment="Top" Grid.ColumnSpan="2" FontWeight="Bold" />
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="5,37,0,0" Name="textBlock2" Text="Developed by" VerticalAlignment="Top" FontWeight="SemiBold" />
                     <TextBlock Height="34" HorizontalAlignment="Left" Margin="17,66,0,0" Name="textBlock3" Text="jessenic" VerticalAlignment="Top" Grid.Column="1" />
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="13,163,0,0" Name="textBlock4" Text="Heathcliff74's WP7 Root Tools SDK" VerticalAlignment="Top" Grid.Column="1" />

@@ -73,6 +73,7 @@ namespace CacheClearer
             {
                 App.ViewModel.LoadData();
             }
+                    
         }
 
 
