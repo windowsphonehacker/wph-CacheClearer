@@ -21,15 +21,42 @@ namespace CacheClearer
             int totalSize = 0;
 
             string path = @"\Applications\Data\" + guid + @"\Data\Cache\";
-            List<WP7RootToolsSDK.File> files = getFilesInSubFolders(path);
 
-            foreach (WP7RootToolsSDK.File file in files)
+            foreach (WP7RootToolsSDK.File file in getFilesInSubFolders(path))
             {
-                WP7RootToolsSDK.FileSystem.DeleteFile(file.Path);
-                System.Diagnostics.Debug.WriteLine("Deleted " + file.Path);
-                totalSize += (int)file.Size;
+                try
+                {
+                    WP7RootToolsSDK.FileSystem.DeleteFile(file.Path);
+                    System.Diagnostics.Debug.WriteLine("Deleted " + file.Path);
+                    totalSize += (int)file.Size;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Could not delete file " + file.Path + ": " + ex.Message);
+                }
             }
-
+            System.Diagnostics.Debug.WriteLine("Removing empty cache folders...");
+            foreach (WP7RootToolsSDK.Folder folder in getFoldersInSubFolders(path))
+            {
+                try
+                {
+                    WP7RootToolsSDK.FileSystem.DeleteFolder(folder.Path);
+                    System.Diagnostics.Debug.WriteLine("Deleted folder " + folder.Path);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Could not delete folder " + folder.Path + ": " + ex.Message);
+                }
+            }
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Deleted app's main cache folder " + path);
+                WP7RootToolsSDK.FileSystem.DeleteFolder(path);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Could not delete app's main cach folder " + path + ": " + ex.Message);
+            }
             return totalSize;
         }
 
@@ -58,6 +85,29 @@ namespace CacheClearer
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             return fileList;
+        }
+
+        public static List<WP7RootToolsSDK.Folder> getFoldersInSubFolders(string path)
+        {
+            List<WP7RootToolsSDK.Folder> folderList = new List<WP7RootToolsSDK.Folder>();
+
+            try
+            {
+                WP7RootToolsSDK.Folder folder = WP7RootToolsSDK.FileSystem.GetFolder(path);
+                foreach (WP7RootToolsSDK.FileSystemEntry item in folder.GetSubItems())
+                {
+                    if (item.IsFolder)
+                    {
+                        folderList.AddRange(getFoldersInSubFolders(item.Path));
+                        folderList.Add((WP7RootToolsSDK.Folder)item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return folderList;
         }
         public static uint getTotalCacheSize()
         {
