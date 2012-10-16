@@ -63,15 +63,25 @@ namespace CacheClearer
                 System.Diagnostics.Debug.WriteLine(item);
                 saved += cleanCache.cleanAppCache(item.LineTwo);
             }
+
+            saved += cleanCache.cleanIECache();
+
             GlobalLoading.Instance.IsLoading = false;
             MessageBox.Show("Cache cleaned.\n\nYou saved " + Utils.readableFileSize(saved) + " of storage space.");
         }
         // Load data for the ViewModel Items
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!App.ViewModel.IsDataLoaded)
+            try
             {
-                App.ViewModel.LoadData();
+                if (!App.ViewModel.IsDataLoaded)
+                {
+                    App.ViewModel.LoadData();
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("An error occured when loading the data!\n" + err.Message + "\n" + err.StackTrace);
             }
                     
         }
@@ -87,6 +97,15 @@ namespace CacheClearer
         {
             // Navigate to the new page
             NavigationService.Navigate(new Uri("/SettingsPage.xaml?page=about", UriKind.Relative));
+        }
+
+        private void ApplicationBarMenuItem_Click(object sender, EventArgs e)
+        {
+            GlobalLoading.Instance.IsLoading = true;
+            int size = cleanCache.cleanIECache();
+            GlobalLoading.Instance.IsLoading = false;
+
+            MessageBox.Show("You saved " + Utils.readableFileSize(size) + " of storage space.");
         }
 
     }

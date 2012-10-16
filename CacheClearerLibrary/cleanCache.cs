@@ -16,11 +16,21 @@ namespace CacheClearer
     //In separate class due to the fact it is accessed by multiple pages
     public class cleanCache
     {
+        public static int cleanIECache()
+        {
+            return cleanCache.cleanAppPath(@"\Windows\Profiles\guest\Temporary Internet Files\Content.IE5");
+        }
+
         public static int cleanAppCache(string guid)
+        {
+            string path = @"\Applications\Data\" + guid + @"\Data\Cache\";
+            return cleanAppPath(guid);
+        }
+
+        public static int cleanAppPath(string path)
         {
             int totalSize = 0;
 
-            string path = @"\Applications\Data\" + guid + @"\Data\Cache\";
 
             foreach (WP7RootToolsSDK.File file in getFilesInSubFolders(path))
             {
