@@ -47,6 +47,9 @@
             <shell:ApplicationBarIconButton IconUri="/Images/Clean.png" Text="Quick clean" Click="button1_Click"/>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Clean IE Cache" Click="ApplicationBarMenuItem_Click" />
+                <shell:ApplicationBarMenuItem Text="Clean maps Cache" Click="ApplicationBarMenuItem_Click_Maps" />
+                <shell:ApplicationBarMenuItem Text="Clean office Cache" Click="ApplicationBarMenuItem_Click_Office" />
+                
                 <shell:ApplicationBarMenuItem Text="Settings" Click="SettingsButton_Click" />
                 <shell:ApplicationBarMenuItem Text="About..." Click="AboutButton_Click" />
             </shell:ApplicationBar.MenuItems>

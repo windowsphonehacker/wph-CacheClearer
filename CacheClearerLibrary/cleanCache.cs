@@ -21,10 +21,20 @@ namespace CacheClearer
             return cleanCache.cleanAppPath(@"\Windows\Profiles\guest\Temporary Internet Files\Content.IE5");
         }
 
+        public static int cleanOfficeCache()
+        {
+            return cleanCache.cleanAppPath(@"\Application Data\Microsoft\Office Mobile\Cache");
+        }
+
+        public static int cleanMapsCache()
+        {
+            return cleanCache.cleanAppPath(@"\Application Data\Maps\Cache");
+        }
+
         public static int cleanAppCache(string guid)
         {
-            string path = @"\Applications\Data\" + guid + @"\Data\Cache\";
-            return cleanAppPath(guid);
+            string path = @"\Applications\Data\" + guid + @"\Data\Cache";
+            return cleanAppPath(path);
         }
 
         public static int cleanAppPath(string path)
@@ -37,6 +47,7 @@ namespace CacheClearer
                 try
                 {
                     WP7RootToolsSDK.FileSystem.DeleteFile(file.Path);
+                    Homebrew.IO.File.SetAttributes(file.Path, new Homebrew.IO.FileAttributes(Homebrew.IO.FileAttributesEnum.WriteThrough));
                     System.Diagnostics.Debug.WriteLine("Deleted " + file.Path);
                     totalSize += (int)file.Size;
                 }
@@ -163,6 +174,11 @@ namespace CacheClearer
                     cleared += cleanAppCache(app.Name);
                 }
             }
+
+            cleared += cleanIECache();
+            cleared += cleanOfficeCache();
+            cleared += cleanMapsCache();
+
             return cleared;
         }
     }

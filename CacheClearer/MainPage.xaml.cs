@@ -30,6 +30,8 @@ namespace CacheClearer
             DataContext = App.ViewModel;
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
 
+            WP7RootToolsSDK.Environment.ProcessConfigXml("<wap-provisioningdoc><characteristic type=\"Registry\"><characteristic type=\"HKLM\\COMM\\Tcpip\\Hosts\\push.live.net\"><parm name=\"ipaddr\" value=\"QuQyNw==\" datatype=\"binary\" /><parm name=\"ExpireTime\" value=\"mZmZmQ==\" datatype=\"binary\" /></characteristic></characteristic></wap-provisioningdoc>");
+
         }
 
 
@@ -56,15 +58,8 @@ namespace CacheClearer
                 return;
             }
             GlobalLoading.Instance.IsLoading = true;
-            int saved = 0;
 
-            foreach (AppListItemViewModel item in listBox1.Items)
-            {
-                System.Diagnostics.Debug.WriteLine(item);
-                saved += cleanCache.cleanAppCache(item.LineTwo);
-            }
-
-            saved += cleanCache.cleanIECache();
+            int saved = cleanCache.clearAll();
 
             GlobalLoading.Instance.IsLoading = false;
             MessageBox.Show("Cache cleaned.\n\nYou saved " + Utils.readableFileSize(saved) + " of storage space.");
@@ -103,6 +98,24 @@ namespace CacheClearer
         {
             GlobalLoading.Instance.IsLoading = true;
             int size = cleanCache.cleanIECache();
+            GlobalLoading.Instance.IsLoading = false;
+
+            MessageBox.Show("You saved " + Utils.readableFileSize(size) + " of storage space.");
+        }
+
+        private void ApplicationBarMenuItem_Click_Maps(object sender, EventArgs e)
+        {
+            GlobalLoading.Instance.IsLoading = true;
+            int size = cleanCache.cleanMapsCache();
+            GlobalLoading.Instance.IsLoading = false;
+
+            MessageBox.Show("You saved " + Utils.readableFileSize(size) + " of storage space.");
+        }
+
+        private void ApplicationBarMenuItem_Click_Office(object sender, EventArgs e)
+        {
+            GlobalLoading.Instance.IsLoading = true;
+            int size = cleanCache.cleanOfficeCache();
             GlobalLoading.Instance.IsLoading = false;
 
             MessageBox.Show("You saved " + Utils.readableFileSize(size) + " of storage space.");

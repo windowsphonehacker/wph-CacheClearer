@@ -118,7 +118,7 @@ namespace CacheClearer
                 // An unhandled exception has occurred; break into the debugger
                 System.Diagnostics.Debugger.Break();
             }
-            MessageBox.Show(e.ExceptionObject.Message + " " + e.ExceptionObject.StackTrace);
+            //MessageBox.Show(e.ExceptionObject.Message + " " + e.ExceptionObject.StackTrace);
         }
 
         #region Phone application initialization
@@ -134,7 +134,7 @@ namespace CacheClearer
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
             GlobalLoading.Instance.Initialize(RootFrame);
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
@@ -143,6 +143,7 @@ namespace CacheClearer
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
+
         }
 
         // Do not add any additional code to this method
@@ -154,6 +155,8 @@ namespace CacheClearer
 
             // Remove this handler since it is no longer needed
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
+
+            
         }
 
         #endregion
