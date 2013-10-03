@@ -41,8 +41,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Homebrew">
-      <HintPath>..\..\HTCRoot\Homebrew\Homebrew\Bin\Debug\Homebrew.dll</HintPath>
+    <Reference Include="HtcRoot_Homebrew_Release">
+      <HintPath>..\Lib\HtcRoot_Homebrew_Release.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />

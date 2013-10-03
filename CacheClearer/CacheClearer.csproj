@@ -51,8 +51,8 @@
     <Reference Include="AmCharts.Windows.QuickCharts.WP">
       <HintPath>..\..\..\..\..\Downloads\amwpquickdemo_1.1.beta.r2\QuickChartsDemoWP7\AmCharts.Windows.QuickCharts.WP.dll</HintPath>
     </Reference>
-    <Reference Include="Homebrew">
-      <HintPath>..\..\HTCRoot\Homebrew\Homebrew\Bin\Debug\Homebrew.dll</HintPath>
+    <Reference Include="HtcRoot_Homebrew_Release">
+      <HintPath>..\Lib\HtcRoot_Homebrew_Release.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
